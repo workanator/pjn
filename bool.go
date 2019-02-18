@@ -1,11 +1,6 @@
-package jsons
+package pjn
 
 import "bytes"
-
-var (
-	valueFalse = []byte("false")
-	valueTrue  = []byte("true")
-)
 
 func Bool(value bool) Produce {
 	if value {

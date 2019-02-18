@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/workanator/jsons"
+	"github.com/workanator/pjn"
 )
 
 var (
@@ -19,19 +19,19 @@ var (
 	}
 )
 
-func BenchmarkJsonsObject(b *testing.B) {
-	s := jsons.NewStream()
-	obj := jsons.Object(
-		jsons.Member("heights", jsons.Array(
-			jsons.Int(1),
-			jsons.Int(2),
-			jsons.Int(3),
+func BenchmarkPjnStaticObject(b *testing.B) {
+	s := pjn.NewProducer()
+	obj := pjn.Object(
+		pjn.Member("heights", pjn.Array(
+			pjn.Int(1),
+			pjn.Int(2),
+			pjn.Int(3),
 		)),
-		jsons.Member("categories", jsons.Object(
-			jsons.Member("one", jsons.IntVar(&testObj.Categories.One)),
-			jsons.Member("two", jsons.IntVar(&testObj.Categories.Two)),
+		pjn.Member("categories", pjn.Object(
+			pjn.Member("one", pjn.BindInt(&testObj.Categories.One)),
+			pjn.Member("two", pjn.BindInt(&testObj.Categories.Two)),
 		)),
-		jsons.Member("awesome", jsons.Bool(false)),
+		pjn.Member("awesome", pjn.Bool(false)),
 	)
 	for i := 0; i < b.N; i++ {
 		if err := s.Produce(obj); err != nil {

@@ -1,4 +1,4 @@
-package jsons
+package pjn
 
 import (
 	"bytes"

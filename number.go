@@ -1,4 +1,4 @@
-package jsons
+package pjn
 
 import (
 	"bytes"
@@ -17,7 +17,15 @@ func Int(value int) Produce {
 	}
 }
 
-func IntVar(ref *int) Produce {
+func NullableInt(ref *int) Produce {
+	if ref == nil {
+		return produceNull
+	} else {
+		return Int(*ref)
+	}
+}
+
+func BindInt(ref *int) Produce {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -32,7 +40,7 @@ func IntVar(ref *int) Produce {
 	}
 }
 
-func OptionalIntVar(ref **int) Produce {
+func BindNullableInt(ref **int) Produce {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
