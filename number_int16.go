@@ -5,11 +5,11 @@ import (
 	"strconv"
 )
 
-func Uint(value uint) Produce {
+func Int16(value int16) Produce {
 	if value == 0 {
 		return produceNumberZero
 	} else {
-		s := strconv.FormatUint(uint64(value), 10)
+		s := strconv.FormatInt(int64(value), 10)
 		return func(buf *bytes.Buffer) (err error) {
 			_, _ = buf.WriteString(s)
 			return nil
@@ -17,15 +17,15 @@ func Uint(value uint) Produce {
 	}
 }
 
-func NullableUint(ref *uint) Produce {
+func NullableInt16(ref *int16) Produce {
 	if ref == nil {
 		return produceNull
 	} else {
-		return Uint(*ref)
+		return Int16(*ref)
 	}
 }
 
-func BindUint(ref *uint) Produce {
+func BindInt16(ref *int16) Produce {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -33,14 +33,14 @@ func BindUint(ref *uint) Produce {
 			if *ref == 0 {
 				_ = buf.WriteByte(valueNumberZero)
 			} else {
-				_, _ = buf.WriteString(strconv.FormatUint(uint64(*ref), 10))
+				_, _ = buf.WriteString(strconv.FormatInt(int64(*ref), 10))
 			}
 			return nil
 		}
 	}
 }
 
-func BindNullableUint(ref **uint) Produce {
+func BindNullableInt16(ref **int16) Produce {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -51,7 +51,7 @@ func BindNullableUint(ref **uint) Produce {
 				if **ref == 0 {
 					_ = buf.WriteByte(valueNumberZero)
 				} else {
-					_, _ = buf.WriteString(strconv.FormatUint(uint64(**ref), 10))
+					_, _ = buf.WriteString(strconv.FormatInt(int64(**ref), 10))
 				}
 			}
 			return nil
