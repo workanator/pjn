@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func Uint16(value uint16) Produce {
+func Uint32(value uint32) Produce {
 	if value == 0 {
 		return produceNumberZero
 	} else {
@@ -17,15 +17,15 @@ func Uint16(value uint16) Produce {
 	}
 }
 
-func NullableUint16(ref *uint16) Produce {
+func NullableUint32(ref *uint32) Produce {
 	if ref == nil {
 		return produceNull
 	} else {
-		return Uint16(*ref)
+		return Uint32(*ref)
 	}
 }
 
-func BindUint16(ref *uint16) Produce {
+func BindUint32(ref *uint32) Produce {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -40,7 +40,7 @@ func BindUint16(ref *uint16) Produce {
 	}
 }
 
-func BindNullableUint16(ref **uint16) Produce {
+func BindNullableUint32(ref **uint32) Produce {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
