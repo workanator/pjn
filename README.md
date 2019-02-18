@@ -1,2 +1,2 @@
-# jsons
-Go fast and zero-allocation JSON producer
+# pjn
+Fast zero-allocation JSON producer fo Go
