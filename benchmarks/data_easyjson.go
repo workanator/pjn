@@ -17,7 +17,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjson794297d0DecodeGithubComWorkanatorJsonsBenchmarks(in *jlexer.Lexer, out *TestObj) {
+func easyjson794297d0DecodeGithubComWorkanatorPjnBenchmarks(in *jlexer.Lexer, out *TestObj) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -65,6 +65,8 @@ func easyjson794297d0DecodeGithubComWorkanatorJsonsBenchmarks(in *jlexer.Lexer, 
 			out.Awesome = bool(in.Bool())
 		case "Str":
 			out.Str = string(in.String())
+		case "Percent":
+			out.Percent = float32(in.Float32())
 		default:
 			in.SkipRecursive()
 		}
@@ -75,7 +77,7 @@ func easyjson794297d0DecodeGithubComWorkanatorJsonsBenchmarks(in *jlexer.Lexer, 
 		in.Consumed()
 	}
 }
-func easyjson794297d0EncodeGithubComWorkanatorJsonsBenchmarks(out *jwriter.Writer, in TestObj) {
+func easyjson794297d0EncodeGithubComWorkanatorPjnBenchmarks(out *jwriter.Writer, in TestObj) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -130,31 +132,41 @@ func easyjson794297d0EncodeGithubComWorkanatorJsonsBenchmarks(out *jwriter.Write
 		}
 		out.String(string(in.Str))
 	}
+	{
+		const prefix string = ",\"Percent\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Float32(float32(in.Percent))
+	}
 	out.RawByte('}')
 }
 
 // MarshalJSON supports json.Marshaler interface
 func (v TestObj) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjson794297d0EncodeGithubComWorkanatorJsonsBenchmarks(&w, v)
+	easyjson794297d0EncodeGithubComWorkanatorPjnBenchmarks(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v TestObj) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjson794297d0EncodeGithubComWorkanatorJsonsBenchmarks(w, v)
+	easyjson794297d0EncodeGithubComWorkanatorPjnBenchmarks(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *TestObj) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjson794297d0DecodeGithubComWorkanatorJsonsBenchmarks(&r, v)
+	easyjson794297d0DecodeGithubComWorkanatorPjnBenchmarks(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *TestObj) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjson794297d0DecodeGithubComWorkanatorJsonsBenchmarks(l, v)
+	easyjson794297d0DecodeGithubComWorkanatorPjnBenchmarks(l, v)
 }
 func easyjson794297d0Decode(in *jlexer.Lexer, out *struct {
 	One int

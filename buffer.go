@@ -52,3 +52,11 @@ func (buf *Buffer) AppendInt64(n int64) {
 func (buf *Buffer) AppendUint64(n uint64) {
 	_, _ = buf.WriteString(strconv.FormatUint(uint64(n), 10))
 }
+
+func (buf *Buffer) AppendFloat32(n float32) {
+	_, _ = buf.WriteString(strconv.FormatFloat(float64(n), 'g', -1, 32))
+}
+
+func (buf *Buffer) AppendFloat64(n float64) {
+	_, _ = buf.WriteString(strconv.FormatFloat(n, 'g', -1, 64))
+}

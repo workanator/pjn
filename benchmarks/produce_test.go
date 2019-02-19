@@ -17,6 +17,7 @@ var (
 			Two int
 		}{One: 1, Two: 2},
 		Awesome: true,
+		Percent: 0.99,
 	}
 )
 
@@ -33,6 +34,7 @@ func BenchmarkPjnStaticObject(b *testing.B) {
 			pjn.Member("two", pjn.BindInt(&testObj.Categories.Two)),
 		)),
 		pjn.Member("awesome", pjn.Bool(false)),
+		pjn.Member("percent", pjn.Float32(0.99)),
 	)
 	for i := 0; i < b.N; i++ {
 		if err := s.Produce(obj); err != nil {

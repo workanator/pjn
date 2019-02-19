@@ -9,4 +9,5 @@ type TestObj struct {
 	}
 	Awesome bool
 	Str     string
+	Percent float32
 }
