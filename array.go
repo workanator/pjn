@@ -1,16 +1,14 @@
 package pjn
 
-import "bytes"
-
 func Array(producer ...Produce) Produce {
-	return func(buf *bytes.Buffer) (err error) {
+	return func(buf *Buffer) (err error) {
 		// Write opening bracket
-		_ = buf.WriteByte(beginArray)
+		buf.AppendByte(beginArray)
 
 		// Produce object content
 		for n, p := range producer {
 			if n > 0 {
-				_ = buf.WriteByte(valueSeparator)
+				buf.AppendByte(valueSeparator)
 			}
 			if err = p(buf); err != nil {
 				return ArrayProduceFailed(err)
@@ -18,7 +16,7 @@ func Array(producer ...Produce) Produce {
 		}
 
 		// Write closing bracket
-		_ = buf.WriteByte(endArray)
+		buf.AppendByte(endArray)
 
 		return nil
 	}

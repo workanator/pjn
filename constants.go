@@ -1,7 +1,5 @@
 package pjn
 
-import "bytes"
-
 var (
 	valueSeparator  = byte(',')
 	nameSeparator   = byte(':')
@@ -16,22 +14,22 @@ var (
 	valueNumberZero = byte('0')
 )
 
-func produceBoolTrue(buf *bytes.Buffer) (err error) {
-	_, _ = buf.Write(valueTrue)
+func produceBoolTrue(buf *Buffer) (err error) {
+	buf.AppendBytes(valueTrue)
 	return nil
 }
 
-func produceBoolFalse(buf *bytes.Buffer) (err error) {
-	_, _ = buf.Write(valueFalse)
+func produceBoolFalse(buf *Buffer) (err error) {
+	buf.AppendBytes(valueFalse)
 	return nil
 }
 
-func produceNull(buf *bytes.Buffer) (err error) {
-	_, _ = buf.Write(valueNull)
+func produceNull(buf *Buffer) (err error) {
+	buf.AppendBytes(valueNull)
 	return nil
 }
 
-func produceNumberZero(buf *bytes.Buffer) (err error) {
-	_ = buf.WriteByte(valueNumberZero)
+func produceNumberZero(buf *Buffer) (err error) {
+	buf.AppendByte(valueNumberZero)
 	return nil
 }

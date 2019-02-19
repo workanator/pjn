@@ -1,7 +1,5 @@
 package pjn
 
-import "bytes"
-
 const (
 	whereObject = "object"
 	whereArray  = "array"
@@ -59,7 +57,7 @@ type errNilReference struct{}
 func (errNilReference) Error() string { return "nil reference" }
 
 func produceError(err error) Produce {
-	return func(*bytes.Buffer) error {
+	return func(*Buffer) error {
 		return err
 	}
 }

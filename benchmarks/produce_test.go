@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/mailru/easyjson/jwriter"
 	"github.com/workanator/pjn"
 )
 
@@ -20,7 +21,7 @@ var (
 )
 
 func BenchmarkPjnStaticObject(b *testing.B) {
-	s := pjn.NewProducer()
+	s := pjn.Producer{}
 	obj := pjn.Object(
 		pjn.Member("heights", pjn.Array(
 			pjn.Int(1),
@@ -38,6 +39,7 @@ func BenchmarkPjnStaticObject(b *testing.B) {
 			b.Log(err)
 			b.Fail()
 		}
+		_ = s.Bytes()
 	}
 }
 
@@ -68,5 +70,12 @@ func BenchmarkEasyjsonObject(b *testing.B) {
 			b.Log(err)
 			b.Fail()
 		}
+	}
+}
+
+func BenchmarkEasyjsonMarshalObject(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		w := jwriter.Writer{}
+		testObj.MarshalEasyJSON(&w)
 	}
 }

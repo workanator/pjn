@@ -1,17 +1,11 @@
 package pjn
 
-import (
-	"bytes"
-	"strconv"
-)
-
 func Uint(value uint) Produce {
 	if value == 0 {
 		return produceNumberZero
 	} else {
-		s := strconv.FormatUint(uint64(value), 10)
-		return func(buf *bytes.Buffer) (err error) {
-			_, _ = buf.WriteString(s)
+		return func(buf *Buffer) (err error) {
+			buf.AppendUint(value)
 			return nil
 		}
 	}
@@ -29,11 +23,11 @@ func BindUint(ref *uint) Produce {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
-		return func(buf *bytes.Buffer) error {
+		return func(buf *Buffer) error {
 			if *ref == 0 {
-				_ = buf.WriteByte(valueNumberZero)
+				buf.AppendByte(valueNumberZero)
 			} else {
-				_, _ = buf.WriteString(strconv.FormatUint(uint64(*ref), 10))
+				buf.AppendUint(*ref)
 			}
 			return nil
 		}
@@ -44,14 +38,14 @@ func BindNullableUint(ref **uint) Produce {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
-		return func(buf *bytes.Buffer) error {
+		return func(buf *Buffer) error {
 			if *ref == nil {
-				_, _ = buf.Write(valueNull)
+				buf.AppendBytes(valueNull)
 			} else {
 				if **ref == 0 {
-					_ = buf.WriteByte(valueNumberZero)
+					buf.AppendByte(valueNumberZero)
 				} else {
-					_, _ = buf.WriteString(strconv.FormatUint(uint64(**ref), 10))
+					buf.AppendUint(**ref)
 				}
 			}
 			return nil

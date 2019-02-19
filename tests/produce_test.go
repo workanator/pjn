@@ -7,7 +7,7 @@ import (
 )
 
 func TestAll(t *testing.T) {
-	s := pjn.NewProducer()
+	s := pjn.Producer{}
 	err := s.Produce(
 		pjn.Array(
 			pjn.Object(
@@ -40,7 +40,5 @@ func TestAll(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 		t.Fail()
-	} else {
-		t.Log(s.String())
 	}
 }
