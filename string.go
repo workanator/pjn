@@ -5,7 +5,7 @@ func Str(value string) Produce {
 		return produceEmptyString
 	} else {
 		return func(buf *Buffer) (err error) {
-			buf.AppendString(value)
+			buf.AppendEscapedString(value)
 			return nil
 		}
 	}
@@ -27,7 +27,7 @@ func BindStr(ref *string) Produce {
 			if len(*ref) == 0 {
 				buf.AppendBytes(valueEmptyString)
 			} else {
-				buf.AppendString(*ref)
+				buf.AppendEscapedString(*ref)
 			}
 			return nil
 		}
@@ -45,7 +45,7 @@ func BindNullableStr(ref **string) Produce {
 				if len(**ref) == 0 {
 					buf.AppendBytes(valueEmptyString)
 				} else {
-					buf.AppendString(**ref)
+					buf.AppendEscapedString(**ref)
 				}
 			}
 			return nil

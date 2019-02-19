@@ -22,6 +22,10 @@ func (buf *Buffer) AppendString(s string) {
 	_, _ = buf.WriteString(s)
 }
 
+func (buf *Buffer) AppendEscapedString(s string) {
+	_, _ = buf.WriteString(s)
+}
+
 func (buf *Buffer) AppendInt(n int) {
 	_, _ = buf.WriteString(strconv.FormatInt(int64(n), 10))
 }
