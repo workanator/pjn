@@ -17,13 +17,10 @@ var (
 			Two int
 		}{One: 1, Two: 2},
 		Awesome: true,
+		Name:    "tester",
 		Percent: 0.99,
 	}
-)
-
-func BenchmarkPjnStaticObject(b *testing.B) {
-	s := pjn.Producer{}
-	obj := pjn.Object(
+	staticObj = pjn.Object(
 		pjn.Member("heights", pjn.Array(
 			pjn.Int(1),
 			pjn.Int(2),
@@ -33,15 +30,19 @@ func BenchmarkPjnStaticObject(b *testing.B) {
 			pjn.Member("one", pjn.BindInt(&testObj.Categories.One)),
 			pjn.Member("two", pjn.BindInt(&testObj.Categories.Two)),
 		)),
-		pjn.Member("awesome", pjn.Bool(false)),
-		pjn.Member("percent", pjn.Float32(0.99)),
+		pjn.Member("awesome", pjn.BindBool(&testObj.Awesome)),
+		pjn.Member("name", pjn.BindStr(&testObj.Name)),
+		pjn.Member("percent", pjn.BindFloat32(&testObj.Percent)),
 	)
+)
+
+func BenchmarkPjnStaticObject(b *testing.B) {
+	s := pjn.Producer{}
 	for i := 0; i < b.N; i++ {
-		if err := s.Produce(obj); err != nil {
+		if err := s.Produce(staticObj); err != nil {
 			b.Log(err)
 			b.Fail()
 		}
-		_ = s.Bytes()
 	}
 }
 

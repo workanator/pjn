@@ -63,8 +63,8 @@ func easyjson794297d0DecodeGithubComWorkanatorPjnBenchmarks(in *jlexer.Lexer, ou
 			easyjson794297d0Decode(in, &out.Categories)
 		case "Awesome":
 			out.Awesome = bool(in.Bool())
-		case "Str":
-			out.Str = string(in.String())
+		case "Name":
+			out.Name = string(in.String())
 		case "Percent":
 			out.Percent = float32(in.Float32())
 		default:
@@ -123,14 +123,14 @@ func easyjson794297d0EncodeGithubComWorkanatorPjnBenchmarks(out *jwriter.Writer,
 		out.Bool(bool(in.Awesome))
 	}
 	{
-		const prefix string = ",\"Str\":"
+		const prefix string = ",\"Name\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
 		} else {
 			out.RawString(prefix)
 		}
-		out.String(string(in.Str))
+		out.String(string(in.Name))
 	}
 	{
 		const prefix string = ",\"Percent\":"

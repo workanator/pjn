@@ -7,6 +7,7 @@ import (
 
 type Buffer struct {
 	*bytes.Buffer
+	backBuf [128]byte
 }
 
 func (buf *Buffer) AppendByte(b byte) {
@@ -54,9 +55,13 @@ func (buf *Buffer) AppendUint64(n uint64) {
 }
 
 func (buf *Buffer) AppendFloat32(n float32) {
-	_, _ = buf.WriteString(strconv.FormatFloat(float64(n), 'g', -1, 32))
+	b := buf.backBuf[:0]
+	b = strconv.AppendFloat(b, float64(n), 'g', -1, 32)
+	_, _ = buf.Write(b)
 }
 
 func (buf *Buffer) AppendFloat64(n float64) {
-	_, _ = buf.WriteString(strconv.FormatFloat(n, 'g', -1, 64))
+	b := buf.backBuf[:0]
+	b = strconv.AppendFloat(b, float64(n), 'g', -1, 64)
+	_, _ = buf.Write(b)
 }

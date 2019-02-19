@@ -8,6 +8,6 @@ type TestObj struct {
 		Two int
 	}
 	Awesome bool
-	Str     string
+	Name    string
 	Percent float32
 }
