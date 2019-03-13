@@ -28,7 +28,10 @@ func Object(producer ...Produce) Produce {
 
 func Member(name string, value Produce) Produce {
 	if len(name) == 0 {
-		return produceError(MemberProduceFailed(errors.New("member name is empty")))
+		return produceError(MemberProduceFailed(errors.New("empty member name")))
+	}
+	if value == nil {
+		return produceError(MemberProduceFailed(errors.New("nil member value producer")))
 	}
 
 	return func(buf *Buffer) (err error) {

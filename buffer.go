@@ -23,9 +23,9 @@ func (buf *Buffer) AppendString(s string) {
 }
 
 func (buf *Buffer) AppendEscapedString(s string) {
-	_, _ = buf.WriteRune('"')
+	_ = buf.WriteByte(doubleQuote)
 	_, _ = buf.WriteString(s)
-	_, _ = buf.WriteRune('"')
+	_ = buf.WriteByte(doubleQuote)
 }
 
 func (buf *Buffer) AppendInt(n int) {

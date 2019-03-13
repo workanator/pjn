@@ -30,3 +30,7 @@ func (p *Producer) WriteTo(writer io.Writer) (n int64, err error) {
 func (p *Producer) Bytes() []byte {
 	return p.buf.Bytes()
 }
+
+func (p *Producer) String() string {
+	return p.buf.String()
+}

@@ -40,5 +40,27 @@ func TestAll(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 		t.Fail()
+	} else {
+		t.Log(s.String())
+	}
+}
+
+func TestObjectBuilder(t *testing.T) {
+	s := pjn.Producer{}
+	obj := pjn.ObjectBuilder{}.
+		Member("one", pjn.Int(1)).
+		Member("$two", pjn.Str("TWO!")).
+		Member("heights", pjn.Array(
+			pjn.Int(1),
+			pjn.Int(2),
+			pjn.Int(3),
+		)).
+		Build()
+	err := s.Produce(obj)
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	} else {
+		t.Log(s.String())
 	}
 }

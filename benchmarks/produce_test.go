@@ -45,6 +45,25 @@ func BenchmarkPjnStaticObject(b *testing.B) {
 	}
 }
 
+func BenchmarkPjnObjectBuilder(b *testing.B) {
+	s := pjn.Producer{}
+	obj := pjn.ObjectBuilder{}.
+		Member("one", pjn.Int(1)).
+		Member("$two", pjn.Str("TWO!")).
+		Member("heights", pjn.Array(
+			pjn.Int(1),
+			pjn.Int(2),
+			pjn.Int(3),
+		)).
+		Build()
+	for i := 0; i < b.N; i++ {
+		if err := s.Produce(obj); err != nil {
+			b.Log(err)
+			b.Fail()
+		}
+	}
+}
+
 func BenchmarkStandardMarshalObject(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		if _, err := json.Marshal(&testObj); err != nil {
