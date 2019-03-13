@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/mailru/easyjson/jwriter"
 	"github.com/workanator/pjn"
 )
 
@@ -64,21 +63,5 @@ func BenchmarkStandardEncodeObject(b *testing.B) {
 			b.Log(err)
 			b.Fail()
 		}
-	}
-}
-
-func BenchmarkEasyjsonObject(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		if _, err := testObj.MarshalJSON(); err != nil {
-			b.Log(err)
-			b.Fail()
-		}
-	}
-}
-
-func BenchmarkEasyjsonMarshalObject(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		w := jwriter.Writer{}
-		testObj.MarshalEasyJSON(&w)
 	}
 }
