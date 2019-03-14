@@ -26,6 +26,20 @@ var (
 			pjn.Int(3),
 		)),
 		pjn.Member("categories", pjn.Object(
+			pjn.Member("one", pjn.Int(1)),
+			pjn.Member("two", pjn.Int(2)),
+		)),
+		pjn.Member("awesome", pjn.True),
+		pjn.Member("name", pjn.Str("tester")),
+		pjn.Member("percent", pjn.Float32(0.99)),
+	)
+	bindedObj = pjn.Object(
+		pjn.Member("heights", pjn.Array(
+			pjn.Int(1),
+			pjn.Int(2),
+			pjn.Int(3),
+		)),
+		pjn.Member("categories", pjn.Object(
 			pjn.Member("one", pjn.BindInt(&testObj.Categories.One)),
 			pjn.Member("two", pjn.BindInt(&testObj.Categories.Two)),
 		)),
@@ -45,6 +59,16 @@ func BenchmarkPjnStaticObject(b *testing.B) {
 	}
 }
 
+func BenchmarkPjnBindedObject(b *testing.B) {
+	s := pjn.Producer{}
+	for i := 0; i < b.N; i++ {
+		if err := s.Produce(bindedObj); err != nil {
+			b.Log(err)
+			b.Fail()
+		}
+	}
+}
+
 func BenchmarkPjnObjectBuilder(b *testing.B) {
 	s := pjn.Producer{}
 	obj := pjn.ObjectBuilder{}.
@@ -58,6 +82,25 @@ func BenchmarkPjnObjectBuilder(b *testing.B) {
 		Build()
 	for i := 0; i < b.N; i++ {
 		if err := s.Produce(obj); err != nil {
+			b.Log(err)
+			b.Fail()
+		}
+	}
+}
+
+func BenchmarkPjnArrayBuilder(b *testing.B) {
+	s := pjn.Producer{}
+	arr := pjn.ArrayBuilder{}.
+		Push(pjn.Int(1)).
+		Push(pjn.Str("TWO!")).
+		Push(pjn.Array(
+			pjn.Int(1),
+			pjn.Int(2),
+			pjn.Int(3),
+		)).
+		Build()
+	for i := 0; i < b.N; i++ {
+		if err := s.Produce(arr); err != nil {
 			b.Log(err)
 			b.Fail()
 		}

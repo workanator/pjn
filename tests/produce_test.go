@@ -64,3 +64,23 @@ func TestObjectBuilder(t *testing.T) {
 		t.Log(s.String())
 	}
 }
+
+func TestArrayBuilder(t *testing.T) {
+	s := pjn.Producer{}
+	arr := pjn.ArrayBuilder{}.
+		Push(pjn.Int(1)).
+		Push(pjn.Str("TWO!")).
+		Push(pjn.Array(
+			pjn.Int(1),
+			pjn.Int(2),
+			pjn.Int(3),
+		)).
+		Build()
+	err := s.Produce(arr)
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	} else {
+		t.Log(s.String())
+	}
+}
