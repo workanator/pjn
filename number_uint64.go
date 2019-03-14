@@ -1,8 +1,8 @@
 package pjn
 
-func Uint64(value uint64) Produce {
+func Uint64(value uint64) Value {
 	if value == 0 {
-		return produceNumberZero
+		return Zero
 	} else {
 		return func(buf *Buffer) (err error) {
 			buf.AppendUint64(value)
@@ -11,15 +11,15 @@ func Uint64(value uint64) Produce {
 	}
 }
 
-func NullableUint64(ref *uint64) Produce {
+func NullableUint64(ref *uint64) Value {
 	if ref == nil {
-		return produceNull
+		return Null
 	} else {
 		return Uint64(*ref)
 	}
 }
 
-func BindUint64(ref *uint64) Produce {
+func BindUint64(ref *uint64) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -34,7 +34,7 @@ func BindUint64(ref *uint64) Produce {
 	}
 }
 
-func BindNullableUint64(ref **uint64) Produce {
+func BindNullableUint64(ref **uint64) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {

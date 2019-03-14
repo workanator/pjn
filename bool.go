@@ -1,22 +1,37 @@
 package pjn
 
-func Bool(value bool) Produce {
+var (
+	True  Value = produceBoolTrue
+	False Value = produceBoolFalse
+)
+
+func produceBoolTrue(buf *Buffer) (err error) {
+	buf.AppendBytes(valueTrue)
+	return nil
+}
+
+func produceBoolFalse(buf *Buffer) (err error) {
+	buf.AppendBytes(valueFalse)
+	return nil
+}
+
+func Bool(value bool) Value {
 	if value {
-		return produceBoolTrue
+		return True
 	} else {
-		return produceBoolFalse
+		return False
 	}
 }
 
-func NullableBool(ref *bool) Produce {
+func NullableBool(ref *bool) Value {
 	if ref == nil {
-		return produceNull
+		return Null
 	} else {
 		return Bool(*ref)
 	}
 }
 
-func BindBool(ref *bool) Produce {
+func BindBool(ref *bool) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -31,7 +46,7 @@ func BindBool(ref *bool) Produce {
 	}
 }
 
-func BindNullableBool(ref **bool) Produce {
+func BindNullableBool(ref **bool) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {

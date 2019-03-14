@@ -56,7 +56,7 @@ type errNilReference struct{}
 
 func (errNilReference) Error() string { return "nil reference" }
 
-func produceError(err error) Produce {
+func produceError(err error) Value {
 	return func(*Buffer) error {
 		return err
 	}

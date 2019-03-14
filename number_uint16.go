@@ -1,8 +1,8 @@
 package pjn
 
-func Uint16(value uint16) Produce {
+func Uint16(value uint16) Value {
 	if value == 0 {
-		return produceNumberZero
+		return Zero
 	} else {
 		return func(buf *Buffer) (err error) {
 			buf.AppendUint16(value)
@@ -11,15 +11,15 @@ func Uint16(value uint16) Produce {
 	}
 }
 
-func NullableUint16(ref *uint16) Produce {
+func NullableUint16(ref *uint16) Value {
 	if ref == nil {
-		return produceNull
+		return Null
 	} else {
 		return Uint16(*ref)
 	}
 }
 
-func BindUint16(ref *uint16) Produce {
+func BindUint16(ref *uint16) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -34,7 +34,7 @@ func BindUint16(ref *uint16) Produce {
 	}
 }
 
-func BindNullableUint16(ref **uint16) Produce {
+func BindNullableUint16(ref **uint16) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {

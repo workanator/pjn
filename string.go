@@ -1,8 +1,17 @@
 package pjn
 
-func Str(value string) Produce {
+var (
+	EmptyStr Value = produceEmptyString
+)
+
+func produceEmptyString(buf *Buffer) (err error) {
+	buf.AppendBytes(valueEmptyString)
+	return nil
+}
+
+func Str(value string) Value {
 	if len(value) == 0 {
-		return produceEmptyString
+		return EmptyStr
 	} else {
 		return func(buf *Buffer) (err error) {
 			buf.AppendEscapedString(value)
@@ -11,7 +20,7 @@ func Str(value string) Produce {
 	}
 }
 
-func NullableStr(ref *string) Produce {
+func NullableStr(ref *string) Value {
 	if ref == nil {
 		return produceNull
 	} else {
@@ -19,7 +28,7 @@ func NullableStr(ref *string) Produce {
 	}
 }
 
-func BindStr(ref *string) Produce {
+func BindStr(ref *string) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -34,7 +43,7 @@ func BindStr(ref *string) Produce {
 	}
 }
 
-func BindNullableStr(ref **string) Produce {
+func BindNullableStr(ref **string) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {

@@ -3,10 +3,10 @@ package pjn
 import "errors"
 
 type ObjectBuilder struct {
-	p Produce
+	p Value
 }
 
-func (ob ObjectBuilder) Member(name string, value Produce) ObjectBuilder {
+func (ob ObjectBuilder) Member(name string, value Value) ObjectBuilder {
 	if len(name) == 0 {
 		return ObjectBuilder{
 			p: produceError(MemberProduceFailed(errors.New("empty member name"))),
@@ -31,9 +31,9 @@ func (ob ObjectBuilder) Member(name string, value Produce) ObjectBuilder {
 	}
 }
 
-func (ob ObjectBuilder) Build() Produce {
+func (ob ObjectBuilder) Build() Value {
 	if ob.p == nil {
-		return Object()
+		return EmptyObject
 	}
 	return Object(ob.p)
 }

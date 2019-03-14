@@ -1,40 +1,40 @@
 package pjn
 
-func Int16(value int16) Value {
+func Rune(value rune) Value {
 	if value == 0 {
-		return Zero
+		return produceEmptyString
 	} else {
 		return func(buf *Buffer) (err error) {
-			buf.AppendInt16(value)
+			buf.AppendEscapedRune(value)
 			return nil
 		}
 	}
 }
 
-func NullableInt16(ref *int16) Value {
+func NullableRune(ref *rune) Value {
 	if ref == nil {
-		return Null
+		return produceNull
 	} else {
-		return Int16(*ref)
+		return Rune(*ref)
 	}
 }
 
-func BindInt16(ref *int16) Value {
+func BindRune(ref *rune) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
 		return func(buf *Buffer) error {
 			if *ref == 0 {
-				buf.AppendByte(valueNumberZero)
+				buf.AppendBytes(valueEmptyString)
 			} else {
-				buf.AppendInt16(*ref)
+				buf.AppendEscapedRune(*ref)
 			}
 			return nil
 		}
 	}
 }
 
-func BindNullableInt16(ref **int16) Value {
+func BindNullableRune(ref **rune) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -43,9 +43,9 @@ func BindNullableInt16(ref **int16) Value {
 				buf.AppendBytes(valueNull)
 			} else {
 				if **ref == 0 {
-					buf.AppendByte(valueNumberZero)
+					buf.AppendBytes(valueEmptyString)
 				} else {
-					buf.AppendInt16(**ref)
+					buf.AppendEscapedRune(**ref)
 				}
 			}
 			return nil

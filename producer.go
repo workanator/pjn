@@ -9,10 +9,10 @@ type (
 	Producer struct {
 		buf Buffer
 	}
-	Produce func(*Buffer) error
+	Value func(*Buffer) error
 )
 
-func (p *Producer) Produce(value Produce) error {
+func (p *Producer) Produce(value Value) error {
 	if p.buf.Buffer == nil {
 		p.buf.Buffer = &bytes.Buffer{}
 	}

@@ -4,12 +4,25 @@ import (
 	"errors"
 )
 
-func Object(producer ...Produce) Produce {
+var (
+	EmptyObject = produceEmptyObject
+)
+
+func produceEmptyObject(buf *Buffer) (err error) {
+	buf.AppendBytes(emptyObject)
+	return nil
+}
+
+func Object(producer ...Value) Value {
+	if len(producer) == 0 {
+		return EmptyObject
+	}
+
 	return func(buf *Buffer) (err error) {
 		// Write opening bracket
 		buf.AppendByte(beginObject)
 
-		// Produce object content
+		// Value object content
 		for n, p := range producer {
 			if n > 0 {
 				buf.AppendByte(valueSeparator)
@@ -26,7 +39,7 @@ func Object(producer ...Produce) Produce {
 	}
 }
 
-func Member(name string, value Produce) Produce {
+func Member(name string, value Value) Value {
 	if len(name) == 0 {
 		return produceError(MemberProduceFailed(errors.New("empty member name")))
 	}

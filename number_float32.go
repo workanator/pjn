@@ -1,8 +1,8 @@
 package pjn
 
-func Float32(value float32) Produce {
+func Float32(value float32) Value {
 	if value == 0 {
-		return produceNumberZero
+		return Zero
 	} else {
 		return func(buf *Buffer) (err error) {
 			buf.AppendFloat32(value)
@@ -11,15 +11,15 @@ func Float32(value float32) Produce {
 	}
 }
 
-func NullableFloat32(ref *float32) Produce {
+func NullableFloat32(ref *float32) Value {
 	if ref == nil {
-		return produceNull
+		return Null
 	} else {
 		return Float32(*ref)
 	}
 }
 
-func BindFloat32(ref *float32) Produce {
+func BindFloat32(ref *float32) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -34,7 +34,7 @@ func BindFloat32(ref *float32) Produce {
 	}
 }
 
-func BindNullableFloat32(ref **float32) Produce {
+func BindNullableFloat32(ref **float32) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {

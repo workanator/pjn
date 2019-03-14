@@ -1,8 +1,8 @@
 package pjn
 
-func Int32(value int32) Produce {
+func Int32(value int32) Value {
 	if value == 0 {
-		return produceNumberZero
+		return Zero
 	} else {
 		return func(buf *Buffer) (err error) {
 			buf.AppendInt32(value)
@@ -11,15 +11,15 @@ func Int32(value int32) Produce {
 	}
 }
 
-func NullableInt32(ref *int32) Produce {
+func NullableInt32(ref *int32) Value {
 	if ref == nil {
-		return produceNull
+		return Null
 	} else {
 		return Int32(*ref)
 	}
 }
 
-func BindInt32(ref *int32) Produce {
+func BindInt32(ref *int32) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -34,7 +34,7 @@ func BindInt32(ref *int32) Produce {
 	}
 }
 
-func BindNullableInt32(ref **int32) Produce {
+func BindNullableInt32(ref **int32) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {

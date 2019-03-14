@@ -26,7 +26,7 @@ func TestAll(t *testing.T) {
 				pjn.Member("heights", pjn.Array(
 					pjn.Int(9),
 					pjn.Int(8),
-					pjn.Null(),
+					pjn.Null,
 				)),
 				pjn.Member("categories", pjn.Object(
 					pjn.Member("$three", pjn.Int(3)),

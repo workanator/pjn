@@ -1,8 +1,8 @@
 package pjn
 
-func Float64(value float64) Produce {
+func Float64(value float64) Value {
 	if value == 0 {
-		return produceNumberZero
+		return Zero
 	} else {
 		return func(buf *Buffer) (err error) {
 			buf.AppendFloat64(value)
@@ -11,15 +11,15 @@ func Float64(value float64) Produce {
 	}
 }
 
-func NullableFloat64(ref *float64) Produce {
+func NullableFloat64(ref *float64) Value {
 	if ref == nil {
-		return produceNull
+		return Null
 	} else {
 		return Float64(*ref)
 	}
 }
 
-func BindFloat64(ref *float64) Produce {
+func BindFloat64(ref *float64) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {
@@ -34,7 +34,7 @@ func BindFloat64(ref *float64) Produce {
 	}
 }
 
-func BindNullableFloat64(ref **float64) Produce {
+func BindNullableFloat64(ref **float64) Value {
 	if ref == nil {
 		return produceError(ErrNilReference)
 	} else {

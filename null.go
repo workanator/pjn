@@ -1,5 +1,10 @@
 package pjn
 
-func Null() Produce {
-	return produceNull
+var (
+	Null Value = produceNull
+)
+
+func produceNull(buf *Buffer) (err error) {
+	buf.AppendBytes(valueNull)
+	return nil
 }
