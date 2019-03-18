@@ -34,6 +34,18 @@ func (buf *Buffer) AppendEscapedRune(r rune) {
 	_ = buf.WriteByte(doubleQuote)
 }
 
+func (buf *Buffer) AppendUnescapedString(s string) {
+	_ = buf.WriteByte(doubleQuote)
+	_, _ = buf.WriteString(s)
+	_ = buf.WriteByte(doubleQuote)
+}
+
+func (buf *Buffer) AppendUnescapedRune(r rune) {
+	_ = buf.WriteByte(doubleQuote)
+	_, _ = buf.WriteRune(r)
+	_ = buf.WriteByte(doubleQuote)
+}
+
 func (buf *Buffer) AppendInt(n int) {
 	_, _ = buf.WriteString(strconv.FormatInt(int64(n), 10))
 }
