@@ -2,7 +2,7 @@ package pjn
 
 func Rune(value rune) Value {
 	if value == 0 {
-		return produceEmptyString
+		return EmptyStr
 	} else {
 		return func(buf *Buffer) (err error) {
 			buf.AppendEscapedRune(value)
@@ -13,7 +13,7 @@ func Rune(value rune) Value {
 
 func NullableRune(ref *rune) Value {
 	if ref == nil {
-		return produceNull
+		return Null
 	} else {
 		return Rune(*ref)
 	}

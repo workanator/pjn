@@ -6,6 +6,10 @@ type ObjectBuilder struct {
 	p Value
 }
 
+func (ob ObjectBuilder) IsEmpty() bool {
+	return ob.p == nil
+}
+
 func (ob ObjectBuilder) Member(name string, value Value) ObjectBuilder {
 	if len(name) == 0 {
 		return ObjectBuilder{

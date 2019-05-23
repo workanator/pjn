@@ -6,6 +6,10 @@ type ArrayBuilder struct {
 	p Value
 }
 
+func (ab ArrayBuilder) IsEmpty() bool {
+	return ab.p == nil
+}
+
 func (ab ArrayBuilder) Push(value Value) ArrayBuilder {
 	if value == nil {
 		return ArrayBuilder{

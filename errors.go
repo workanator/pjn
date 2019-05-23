@@ -9,6 +9,7 @@ const (
 
 var (
 	ErrNilReference = errNilReference{}
+	ErrEmptySlice   = errEmptySlice{}
 )
 
 type ErrProduceFailed struct {
@@ -55,6 +56,10 @@ func MemberProduceFailed(reason error) ErrProduceFailed {
 type errNilReference struct{}
 
 func (errNilReference) Error() string { return "nil reference" }
+
+type errEmptySlice struct{}
+
+func (errEmptySlice) Error() string { return "empty slice" }
 
 func produceError(err error) Value {
 	return func(*Buffer) error {
